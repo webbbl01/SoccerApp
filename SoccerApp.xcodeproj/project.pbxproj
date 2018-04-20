@@ -12,6 +12,15 @@
 		BC572188208A1FBF00D5FE15 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BC572186208A1FBF00D5FE15 /* Main.storyboard */; };
 		BC57218A208A1FC100D5FE15 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BC572189208A1FC100D5FE15 /* Assets.xcassets */; };
 		BC57218D208A1FC100D5FE15 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BC57218B208A1FC100D5FE15 /* LaunchScreen.storyboard */; };
+		BC57219B208A202700D5FE15 /* TeamInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC572199208A202700D5FE15 /* TeamInfo.swift */; };
+		BC57219C208A202700D5FE15 /* BoxScore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC57219A208A202700D5FE15 /* BoxScore.swift */; };
+		BC57219E208A202F00D5FE15 /* TeamCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC57219D208A202F00D5FE15 /* TeamCell.swift */; };
+		BC5721A2208A203600D5FE15 /* StandingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC57219F208A203600D5FE15 /* StandingsViewController.swift */; };
+		BC5721A3208A203600D5FE15 /* OpponentsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5721A0208A203600D5FE15 /* OpponentsTableViewController.swift */; };
+		BC5721A4208A203600D5FE15 /* FilterTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5721A1208A203600D5FE15 /* FilterTableViewController.swift */; };
+		BC5721A6208A203D00D5FE15 /* StandingsOrganizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5721A5208A203D00D5FE15 /* StandingsOrganizer.swift */; };
+		BC5721A9208A204500D5FE15 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5721A7208A204500D5FE15 /* Notification.swift */; };
+		BC5721AA208A204500D5FE15 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5721A8208A204500D5FE15 /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +31,15 @@
 		BC572189208A1FC100D5FE15 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BC57218C208A1FC100D5FE15 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BC57218E208A1FC100D5FE15 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BC572199208A202700D5FE15 /* TeamInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamInfo.swift; sourceTree = "<group>"; };
+		BC57219A208A202700D5FE15 /* BoxScore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoxScore.swift; sourceTree = "<group>"; };
+		BC57219D208A202F00D5FE15 /* TeamCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamCell.swift; sourceTree = "<group>"; };
+		BC57219F208A203600D5FE15 /* StandingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StandingsViewController.swift; sourceTree = "<group>"; };
+		BC5721A0208A203600D5FE15 /* OpponentsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpponentsTableViewController.swift; sourceTree = "<group>"; };
+		BC5721A1208A203600D5FE15 /* FilterTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterTableViewController.swift; sourceTree = "<group>"; };
+		BC5721A5208A203D00D5FE15 /* StandingsOrganizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StandingsOrganizer.swift; sourceTree = "<group>"; };
+		BC5721A7208A204500D5FE15 /* Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
+		BC5721A8208A204500D5FE15 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +72,11 @@
 		BC572181208A1FBF00D5FE15 /* SoccerApp */ = {
 			isa = PBXGroup;
 			children = (
+				BC572198208A1FE000D5FE15 /* Model */,
+				BC572197208A1FD700D5FE15 /* View */,
+				BC572196208A1FD500D5FE15 /* Controller */,
+				BC572195208A1FD200D5FE15 /* Objects */,
+				BC572194208A1FCB00D5FE15 /* Extensions and Constants */,
 				BC572182208A1FBF00D5FE15 /* AppDelegate.swift */,
 				BC572184208A1FBF00D5FE15 /* ViewController.swift */,
 				BC572186208A1FBF00D5FE15 /* Main.storyboard */,
@@ -62,6 +85,50 @@
 				BC57218E208A1FC100D5FE15 /* Info.plist */,
 			);
 			path = SoccerApp;
+			sourceTree = "<group>";
+		};
+		BC572194208A1FCB00D5FE15 /* Extensions and Constants */ = {
+			isa = PBXGroup;
+			children = (
+				BC5721A8208A204500D5FE15 /* Constants.swift */,
+				BC5721A7208A204500D5FE15 /* Notification.swift */,
+			);
+			path = "Extensions and Constants";
+			sourceTree = "<group>";
+		};
+		BC572195208A1FD200D5FE15 /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+				BC5721A5208A203D00D5FE15 /* StandingsOrganizer.swift */,
+			);
+			path = Objects;
+			sourceTree = "<group>";
+		};
+		BC572196208A1FD500D5FE15 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				BC5721A1208A203600D5FE15 /* FilterTableViewController.swift */,
+				BC5721A0208A203600D5FE15 /* OpponentsTableViewController.swift */,
+				BC57219F208A203600D5FE15 /* StandingsViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		BC572197208A1FD700D5FE15 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				BC57219D208A202F00D5FE15 /* TeamCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		BC572198208A1FE000D5FE15 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				BC57219A208A202700D5FE15 /* BoxScore.swift */,
+				BC572199208A202700D5FE15 /* TeamInfo.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -136,7 +203,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				BC572185208A1FBF00D5FE15 /* ViewController.swift in Sources */,
+				BC5721AA208A204500D5FE15 /* Constants.swift in Sources */,
 				BC572183208A1FBF00D5FE15 /* AppDelegate.swift in Sources */,
+				BC5721A2208A203600D5FE15 /* StandingsViewController.swift in Sources */,
+				BC57219E208A202F00D5FE15 /* TeamCell.swift in Sources */,
+				BC5721A6208A203D00D5FE15 /* StandingsOrganizer.swift in Sources */,
+				BC57219C208A202700D5FE15 /* BoxScore.swift in Sources */,
+				BC5721A9208A204500D5FE15 /* Notification.swift in Sources */,
+				BC57219B208A202700D5FE15 /* TeamInfo.swift in Sources */,
+				BC5721A3208A203600D5FE15 /* OpponentsTableViewController.swift in Sources */,
+				BC5721A4208A203600D5FE15 /* FilterTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
