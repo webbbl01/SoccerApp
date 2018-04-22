@@ -9,13 +9,13 @@
 import Foundation
 
 class StandingsOrganizer {
-    private var standingsData: [TeamInfo]!
+    internal var standingsData: [TeamInfo]!
     
     init() {
         standingsData = []
     }
     
-    func displayStatsByFilter(boxscores: [BoxScore], filter: Filter, completion: @escaping([TeamInfo]) -> Void) {
+    func displayStatsByFilter(boxscores: [BoxScore], filter: Filter) -> [TeamInfo] {
         for score in boxscores {
             if let winner = evaluateWinner(boxScore: score) {
                 addTeamStatsByResult(boxScore: score, winnerId: winner)
@@ -24,7 +24,7 @@ class StandingsOrganizer {
             }
         }
         let filteredData = sortTeamsBy(filter: filter, teamData: standingsData)
-        completion(filteredData)
+        return filteredData
     }
     
     func sortTeamsBy(filter: Filter, teamData: [TeamInfo]) -> [TeamInfo] {
@@ -45,64 +45,55 @@ class StandingsOrganizer {
         let filteredScores = boxScore.filter({ $0.awayTeamId == opponentId || $0.homeTeamId == opponentId })
         var updatedStandings: [TeamInfo] = []
         if filter == .standingsVsTeam {
-            displayStatsByFilter(boxscores: filteredScores, filter: .wins, completion: { (standingsVsOpponent) in
-                updatedStandings = standingsVsOpponent.filter({ $0.teamId != opponentId })
-            })
-            return updatedStandings
+            updatedStandings = displayStatsByFilter(boxscores: filteredScores, filter: .wins)
+            return updatedStandings.filter({ $0.teamId != opponentId })
         } else if filter == .frequentOpponent {
-            let homeIds = filteredScores.map({ $0.homeTeamId })
-            let awayIds = filteredScores.map({ $0.awayTeamId })
-            var totals: [String: Int] = [:]
-            homeIds.forEach({ totals[$0] = (totals[$0] ?? 0) + 1 })
-            awayIds.forEach({ totals[$0] = (totals[$0] ?? 0) + 1 })
-            totals.removeValue(forKey: opponentId)
-            var mostMatchedTeam: String?
-            if let (teamId, _) = totals.max(by: { $0.1 < $1.1 }) {
-                mostMatchedTeam = teamId
-            }
-            if let team = mostMatchedTeam {
-                let relatedBoxScores = boxScore.filter({($0.awayTeamId == opponentId || $0.awayTeamId == team) && ($0.homeTeamId == opponentId || $0.homeTeamId == team) })
-                displayStatsByFilter(boxscores: relatedBoxScores, filter: .wins, completion: { (frequentOpponent) in
-                    updatedStandings = frequentOpponent.filter({ $0.teamId != opponentId })
-                })
-                return updatedStandings
-            } else {
-                return []
-            }
+            let opposingTeamIds = retrieveTeamIdsFromBoxscores(filteredScores, opponentId: opponentId)
+            let mostMatchedTeamBoxscores = retrieveMostMatchedTeamBoxscores(filteredScores, opponentId: opponentId, opposingTeamIds: opposingTeamIds)
+            updatedStandings = displayStatsByFilter(boxscores: mostMatchedTeamBoxscores, filter: .wins)
+            return updatedStandings.filter({ $0.teamId != opponentId })
         } else {
             return []
         }
     }
     
-    private func evaluateWinner(boxScore: BoxScore) -> String? {
-        if boxScore.homeScore < boxScore.awayScore {
-            return boxScore.awayTeamId
-        } else if boxScore.homeScore == boxScore.awayScore {
-            return nil
+    internal func retrieveTeamIdsFromBoxscores(_ boxscores: [BoxScore], opponentId: String) -> [String] {
+        var teamIds: [String] = []
+        for score in boxscores {
+            if score.homeTeamId != opponentId {
+                teamIds.append(score.homeTeamId)
+            } else if score.awayTeamId != opponentId {
+                teamIds.append(score.awayTeamId)
+            }
+        }
+        return teamIds
+    }
+    
+    internal func retrieveMostMatchedTeamBoxscores(_ boxscores: [BoxScore], opponentId: String, opposingTeamIds: [String]) -> [BoxScore] {
+        var totals: [String: Int] = [:]
+        opposingTeamIds.forEach({ totals[$0] = (totals[$0] ?? 0) + 1 })
+        if let (teamId, _) = totals.max(by: { $0.1 < $1.1 }) {
+            let mostMatchedTeamBoxscores = boxscores.filter({($0.awayTeamId == opponentId || $0.awayTeamId == teamId) && ($0.homeTeamId == opponentId || $0.homeTeamId == teamId) })
+            return mostMatchedTeamBoxscores
         } else {
-            return boxScore.homeTeamId
+            return []
         }
     }
     
-    private func addTeamStatsByResult(boxScore: BoxScore, winnerId: String?) {
-        let homeTeam: TeamInfo = {
-            if let existingHomeTeam = getExistingTeamEntry(teamId: boxScore.homeTeamId) {
-                return existingHomeTeam
-            } else {
-                let newHomeTeam = createTeam(teamId: boxScore.homeTeamId, teamName: boxScore.homeTeamName)
-                standingsData.append(newHomeTeam)
-                return newHomeTeam
-            }
-        }()
-        let awayTeam: TeamInfo = {
-            if let existingAwayTeam = getExistingTeamEntry(teamId: boxScore.awayTeamId) {
-                return existingAwayTeam
-            } else {
-                let newAwayTeam = createTeam(teamId: boxScore.awayTeamId, teamName: boxScore.awayTeamName)
-                standingsData.append(newAwayTeam)
-                return newAwayTeam
-            }
-        }()
+    internal func evaluateWinner(boxScore: BoxScore) -> String? {
+        if boxScore.homeScore > boxScore.awayScore {
+            return boxScore.homeTeamId
+        } else if boxScore.homeScore < boxScore.awayScore {
+            return boxScore.awayTeamId
+        } else {
+            //tie
+            return nil
+        }
+    }
+    
+    internal func addTeamStatsByResult(boxScore: BoxScore, winnerId: String?) {
+        let homeTeam: TeamInfo = getTeamEntry(teamId: boxScore.homeTeamId, teamName: boxScore.homeTeamName)
+        let awayTeam: TeamInfo = getTeamEntry(teamId: boxScore.awayTeamId, teamName: boxScore.awayTeamName)
         if let winnerId = winnerId {
             if winnerId == homeTeam.teamId {
                 homeTeam.addWin()
@@ -121,17 +112,17 @@ class StandingsOrganizer {
         awayTeam.addGoalsAgainst(boxScore.homeScore)
     }
     
-    private func getExistingTeamEntry(teamId: String) -> TeamInfo? {
-        if let team = standingsData.filter({ $0.teamId == teamId }).first {
+    internal func getTeamEntry(teamId: String, teamName: String) -> TeamInfo {
+        if let team = standingsData.first(where: { $0.teamId == teamId }) {
             return team
         } else {
-            return nil
+            return createTeam(teamId: teamId, teamName: teamName)
         }
     }
     
-    private func createTeam(teamId: String, teamName: String) -> TeamInfo {
+    internal func createTeam(teamId: String, teamName: String) -> TeamInfo {
         let newTeam = TeamInfo.init(teamId: teamId, teamName: teamName)
+        standingsData.append(newTeam)
         return newTeam
     }
-    
 }

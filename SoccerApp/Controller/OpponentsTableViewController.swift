@@ -14,6 +14,11 @@ class OpponentsTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupData()
+    }
+    
+    private func setupData() {
+        tableView.accessibilityIdentifier = "Opponents"
         sortTeamsAlphabetically()
     }
     
@@ -37,6 +42,8 @@ class OpponentsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: OPPONENTS_CELL, for: indexPath)
         cell.textLabel?.text = teams[indexPath.row].teamName
+        cell.textLabel?.isAccessibilityElement = true
+        cell.textLabel?.accessibilityIdentifier = "TeamName"
         return cell
     }
     

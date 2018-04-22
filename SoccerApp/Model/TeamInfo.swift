@@ -61,6 +61,17 @@ class TeamInfo {
         _goalDifferential = 0
     }
     
+    init(teamId: String, teamName: String, wins: Double, losses: Double, ties: Double, goalsFor: Int, goalsAgainst: Int, goalDifferential: Int) {
+        _teamId = teamId
+        _teamName = teamName
+        _wins = wins
+        _losses = losses
+        _ties = ties
+        _goalsFor = goalsFor
+        _goalsAgainst = goalsAgainst
+        _goalDifferential = goalDifferential
+    }
+    
     func addWin() {
         _wins += 1
     }

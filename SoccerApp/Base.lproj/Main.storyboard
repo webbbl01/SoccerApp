@@ -31,7 +31,7 @@
         <!--Select Opponent-->
         <scene sceneID="iYd-Fm-Jvt">
             <objects>
-                <tableViewController id="BfD-9Q-ErP" customClass="OpponentsTableViewController" customModule="SoccerStandingsApp" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="BfD-9Q-ErP" customClass="OpponentsTableViewController" customModule="SoccerApp" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="4Xu-6l-9o9">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -60,13 +60,13 @@
         <!--Standings-->
         <scene sceneID="Fjf-Kb-3TK">
             <objects>
-                <tableViewController id="XEK-wT-8r8" customClass="StandingsViewController" customModule="SoccerStandingsApp" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="XEK-wT-8r8" customClass="StandingsViewController" customModule="SoccerApp" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="125" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="E3X-Tt-w2W">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="teamCell" rowHeight="125" id="3ik-y4-ohv" customClass="TeamCell" customModule="SoccerStandingsApp" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="teamCell" rowHeight="125" id="3ik-y4-ohv" customClass="TeamCell" customModule="SoccerApp" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="125"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="3ik-y4-ohv" id="BkV-CO-Cc5">
@@ -235,6 +235,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="filterButton" destination="zS1-5v-qHD" id="Qdb-pO-RpI"/>
                         <segue destination="HcO-yb-SDL" kind="show" identifier="filterSegue" id="LdB-yV-DNQ"/>
                     </connections>
                 </tableViewController>
@@ -245,7 +246,7 @@
         <!--Filter-->
         <scene sceneID="XLW-z6-y2Y">
             <objects>
-                <tableViewController id="HcO-yb-SDL" customClass="FilterTableViewController" customModule="SoccerStandingsApp" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="HcO-yb-SDL" customClass="FilterTableViewController" customModule="SoccerApp" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="XYA-3d-n3V">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

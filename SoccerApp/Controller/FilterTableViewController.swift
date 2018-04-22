@@ -27,6 +27,7 @@ class FilterTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupData()
     }
     
     private func setSelectedFilter(_ filter: Filter) {
@@ -50,6 +51,10 @@ class FilterTableViewController: UITableViewController {
         tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
         cell.accessoryType = .checkmark
         deselectRemainingCells(selectedIndex: index)
+    }
+    
+    private func setupData() {
+        tableView.accessibilityIdentifier = "Filter"
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

@@ -9,17 +9,18 @@
 import UIKit
 
 class StandingsViewController: UITableViewController {
+    @IBOutlet var filterButton: UIBarButtonItem!
     var scores: [BoxScore]!
     var teams: [TeamInfo]!
     var teamsByOpponentFilter: [TeamInfo]?
     let standingsOrganizer = StandingsOrganizer()
-    
     var filter: Filter!
     var opponentName: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(selectedOpponentFilter), name: .selectedOpponent, object: nil)
+        filterButton.isEnabled = false
         setupData()
     }
     
@@ -34,7 +35,6 @@ class StandingsViewController: UITableViewController {
         }
     }
     
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == FILTER {
             guard let destinationVc = segue.destination as? FilterTableViewController else { return }
@@ -47,48 +47,32 @@ class StandingsViewController: UITableViewController {
     private func setupData() {
         teams = []
         filter = .wins
+        navigationController?.navigationItem.accessibilityLabel = "Standings Header"
+        tableView.accessibilityIdentifier = "Standings Table"
         loadScores()
     }
 
     private func loadScores() {
-        guard let url = URL(string: restAPI) else {
-            print("Issue loading data")
-            return
-        }
         DispatchQueue.global(qos: .userInteractive).async {
-            URLSession.shared.dataTask(with: url) { (data, response, error) in
+            Networking.shared.getTeamsFrom(url: restAPI, completion: { (scoreData, error) in
                 if let error = error {
-                    print("Error requesting data: \(error.localizedDescription)")
+                    print(error.localizedDescription)
                     return
                 }
-                //check for response 200, and other potential codes
-                guard let data = data else {
-                    print("No data to return.")
-                    return
+                guard let scoreData = scoreData else { return }
+                self.scores = scoreData
+                self.teams = self.standingsOrganizer.displayStatsByFilter(boxscores: scoreData, filter: self.filter)
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                    self.filterButton.isEnabled = true
                 }
-                
-                do {
-                    let jsonScores = try JSONDecoder().decode([BoxScore].self, from: data)
-                    self.scores = jsonScores
-                    self.standingsOrganizer.displayStatsByFilter(boxscores: jsonScores, filter: self.filter, completion: { [weak self] (standingsData) in
-                        guard let strongSelf = self else { return }
-                        strongSelf.teams = standingsData
-                        DispatchQueue.main.async {
-                            self?.tableView.reloadData()
-                        }
-                    })
-                    
-                } catch let error {
-                    print("Error retrieving data from api:", error.localizedDescription)
-                }
-                }.resume()
+            })
         }
     }
     
     @IBAction func filterTapped(_ sender: UIBarButtonItem) {
         performSegue(withIdentifier: FILTER, sender: self)
     }
-    
     
     //MARK: - UITableViewDatasource
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -113,7 +97,6 @@ class StandingsViewController: UITableViewController {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: TEAM_CELL) as? TeamCell else {
             return UITableViewCell()
         }
-        
         if let opponentFilter = teamsByOpponentFilter {
             cell.configureCell(teamInfo: opponentFilter[indexPath.row])
         } else {
@@ -150,4 +133,3 @@ extension StandingsViewController: FilterTableViewControllerDelegate {
         tableView.reloadData()
     }
 }
-

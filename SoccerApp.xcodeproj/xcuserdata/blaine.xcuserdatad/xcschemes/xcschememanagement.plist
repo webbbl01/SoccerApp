@@ -7,7 +7,35 @@
 		<key>SoccerApp.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
+		<key>SoccerAppUITests.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
+		<key>SoccerAppUnitTests.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
 			<integer>0</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>BC57217E208A1FBF00D5FE15</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>BC5721AE208BA92D00D5FE15</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>BC5721BC208BAA3700D5FE15</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>
